@@ -176,6 +176,9 @@ class P2OSNode
     int ticksmm ; //encoder ticks per millimeter tire motion
     int driftfactor; //working drift, to correct rotational offset
 
+    boost::array<double, 36> odom_pose_cov;
+    boost::array<double, 36> odom_twist_cov;
+
 
     //! Maximum motor speed in Meters per second.
     int motor_max_speed;
