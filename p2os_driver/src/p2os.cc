@@ -108,7 +108,57 @@ P2OSNode::P2OSNode(ros::NodeHandle nh) :
   n_private.param( "driftfactor", odomparam, -1);
   driftfactor = odomparam; //working drift, to correct rotational offset
 
+  ///
+  // Load up the process noise covariance (from the launch file/parameter server)
 
+  // Sum a list of doubles from the parameter server
+  std::vector<double> my_double_list;
+
+  	odom_pose_cov = boost::assign::list_of
+	  (1e-3) (0)    (0)   (0)   (0)   (0)
+	  (0)    (1e-3) (0)   (0)   (0)   (0)
+	  (0)    (0)    (1e6) (0)   (0)   (0)
+	  (0)    (0)    (0)   (1e6) (0)   (0)
+	  (0)    (0)    (0)   (0)   (1e6) (0)
+	  (0)    (0)    (0)   (0)   (0)   (1e3);
+	
+  nh.getParam("odom_pose_cov", my_double_list);
+  if( my_double_list.size() && my_double_list.size() != 36 )
+    {
+      ROS_ERROR("odom_pose_cov should have 36 elements");
+    }
+  else
+    {
+      for(unsigned i=0; i < 36; i++)
+	{
+	  odom_pose_cov[i] = my_double_list[i];
+	}
+    }
+
+  my_double_list.clear();
+
+    	odom_twist_cov = boost::assign::list_of
+	  (1e-3) (0)    (0)   (0)   (0)   (0)
+	  (0)    (1e-3) (0)   (0)   (0)   (0)
+	  (0)    (0)    (1e6) (0)   (0)   (0)
+	  (0)    (0)    (0)   (1e6) (0)   (0)
+	  (0)    (0)    (0)   (0)   (1e6) (0)
+	  (0)    (0)    (0)   (0)   (0)   (1e3);
+
+  nh.getParam("odom_twist_cov", my_double_list);
+  if( my_double_list.size() && my_double_list.size() != 36 )
+    {
+      ROS_ERROR("odom_twist_cov should have 36 elements");
+    }
+  else
+    {
+      for(unsigned i=0; i < 36; i++)
+	{
+	  odom_twist_cov[i] = my_double_list[i];
+	}
+    }
+  ////
+  
 
     desired_freq = 10;
     
@@ -528,6 +578,7 @@ int P2OSNode::Setup()
         sippacket = new SIP(param_idx);
         sippacket->odom_frame_id = odom_frame_id;
         sippacket->base_link_frame_id = base_link_frame_id;
+	sippacket->setOdomCov(odom_pose_cov, odom_twist_cov);
     }
     /*
   sippacket->x_offset = 0;
