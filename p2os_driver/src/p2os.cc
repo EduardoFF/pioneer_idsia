@@ -105,7 +105,7 @@ P2OSNode::P2OSNode(ros::NodeHandle nh) :
   //these two parameters are not set by default:
   n_private.param( "ticksmm", odomparam, -1);
   ticksmm = odomparam; //encoder ticks per millimeter tire motion
-  n_private.param( "revcount", odomparam, -1);
+  n_private.param( "driftfactor", odomparam, -1);
   driftfactor = odomparam; //working drift, to correct rotational offset
 
 

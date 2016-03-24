@@ -1,0 +1,4 @@
+<launch>
+	<node pkg="camera1394" type="camera1394_node" name="camera1394_node" args="_gui:=0007481202f65cae _video_mode:=640x480_yuv422 _iso_speed:=400 _frame_rate:=30" />
+	<node name="image_proc" pkg="image_proc" type="image_proc" ns="camera"/> 
+</launch>
