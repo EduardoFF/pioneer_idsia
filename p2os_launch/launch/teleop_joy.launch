@@ -3,6 +3,9 @@
 	<param name="axis_vx" type="int" value="1" />
 	<param name="axis_vw" type="int" value="3" />
 	<param name="axis_vy" type="int" value="0" />
+	<param name="max_vw" type="double" value="1.6" />
+	<param name="max_vw_run" type="double" value="1.6" />
+	
 	<param name="deadman_button" type="int" value="5" />
 	<param name="run_button" type="int" value="4" />
 	<node pkg="p2os_teleop" type="p2os_teleop" name="p2os_teleop" >

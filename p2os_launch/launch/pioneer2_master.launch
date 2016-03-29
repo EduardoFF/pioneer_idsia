@@ -9,15 +9,24 @@
 	<arg name="Dashboard" value="0"/>
 	<arg name="enableMotor" value="1"/>
 	<arg name="gps" value="1"/>
-	<arg name="camera" value="1"/>
-	<arg name="videoWebServer" value="1"/>
+	<arg name="camera" value="0"/>
+	<arg name="videoWebServer" value="0"/>
 
 
         <!-- Start the p2os ROS Driver -->
 	<group if="$(arg P2OS_Driver)" >
-	<node pkg="p2os_driver" name="p2os_driver" type="p2os_driver" respawn="true" respawn_delay="30" args="_port:=/dev/myrobot _pulse:=1.0">
+	<node pkg="p2os_driver" name="p2os_driver" type="p2os_driver" output="screen" respawn="true" respawn_delay="30" args="_port:=/dev/myrobot _pulse:=1.0">
 	<param name="ticksmm" value="135.7" />
 	<param name="revcount" value="31390" />	    
+	<param name="driftfactor" value="45" />	    
+<rosparam param="odom_twist_cov"> 
+[0.003,  0, 0, 0, 0, 0,
+0,  0.00001, 0, 0, 0, 0,
+0,  0, 0, 0, 0, 0,
+0,  0, 0, 0, 0, 0,
+0,  0, 0, 0, 0, 0,
+0,  0, 0, 0, 0, 0.005]
+</rosparam>
 	</node>	
 	</group>
 
