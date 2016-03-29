@@ -114,8 +114,8 @@ class SIP
     void PrintArmInfo ();
     void FillStandard(ros_p2os_data_t* data);
 
-    void setOdomCov( boost::array<double, 36> &pose_cov,
-		     boost::array<double, 36> &twist_cov);
+    void setOdomCov( boost::array<double, 36> pose_cov,
+		     boost::array<double, 36> twist_cov);
     //void FillSERAUX(player_p2os_data_t* data);
     //void FillGyro(player_p2os_data_t* data);
     //void FillArm(player_p2os_data_t* data);

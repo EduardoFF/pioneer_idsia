@@ -35,11 +35,12 @@
 #include <sstream>
 
 
-void SIP::setOdomCov( boost::array<double, 36> &pose_cov_,
-		      boost::array<double, 36> &twist_cov_)
+void SIP::setOdomCov( boost::array<double, 36> pose_cov_,
+		      boost::array<double, 36> twist_cov_)
 {
   pose_cov = pose_cov_;
   twist_cov = twist_cov_;
+  printf("setOdom %.2f %.2f\n", twist_cov_[0], twist_cov[0]);
 }
 
 void SIP::FillStandard(ros_p2os_data_t* data)
@@ -87,7 +88,9 @@ void SIP::FillStandard(ros_p2os_data_t* data)
   data->position.pose.covariance = pose_cov;
 
   data->position.twist.covariance = twist_cov;
-  
+  data->position.twist.covariance[0] = twist_cov[0];
+  data->position.twist.covariance[7] = twist_cov[7];
+  data->position.twist.covariance[35] = twist_cov[35];
   //publish transform
   data->odom_trans.header = data->position.header;
   data->odom_trans.child_frame_id = data->position.child_frame_id;
