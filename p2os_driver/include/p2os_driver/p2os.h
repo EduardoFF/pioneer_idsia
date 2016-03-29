@@ -154,6 +154,7 @@ class P2OSNode
     std::string psos_tcp_host;
     std::string odom_frame_id;
     std::string base_link_frame_id;
+    bool        publish_odom_transform;
     int         psos_fd;
     bool        psos_use_tcp;
     int         psos_tcp_port;

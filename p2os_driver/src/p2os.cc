@@ -108,6 +108,8 @@ P2OSNode::P2OSNode(ros::NodeHandle nh) :
   n_private.param( "driftfactor", odomparam, -1);
   driftfactor = odomparam; //working drift, to correct rotational offset
 
+  n_private.param("publish_odom_transform", publish_odom_transform, true);
+
   ///
   // Load up the process noise covariance (from the launch file/parameter server)
 
@@ -793,11 +795,13 @@ int P2OSNode::Shutdown()
 void
 P2OSNode::StandardSIPPutData(ros::Time ts)
 {
-    
-    p2os_data.position.header.stamp = ts;
-    pose_pub_.publish(p2os_data.position);
-    p2os_data.odom_trans.header.stamp = ts;
-    odom_broadcaster.sendTransform(p2os_data.odom_trans);
+  p2os_data.position.header.stamp = ts;
+  pose_pub_.publish(p2os_data.position);
+  if( this->publish_odom_transform )
+    {
+      p2os_data.odom_trans.header.stamp = ts;
+      odom_broadcaster.sendTransform(p2os_data.odom_trans);
+    }
     
     p2os_data.batt.header.stamp = ts;
     batt_pub_.publish(p2os_data.batt);
