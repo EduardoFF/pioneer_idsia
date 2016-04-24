@@ -1,6 +1,6 @@
 import lcm
 from pose_t import pose_t
-
+from plan_waypoint_t import plan_waypoint_t
 
 """ create lcm """
 lc = lcm.LCM("udpm://239.255.76.67:7667?ttl=1")
